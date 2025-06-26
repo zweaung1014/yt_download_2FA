@@ -2,7 +2,12 @@ import pyotp
 import subprocess
 import os
 
-SECRET = "2wzgrqmzbpjqyg44nikxjlwa63r36ejv"
+import os
+
+SECRET = os.getenv("TOTP_SECRET")
+if not SECRET:
+    raise ValueError("TOTP_SECRET environment variable is not set.")
+
 
 totp = pyotp.TOTP(SECRET)
 code = totp.now()
